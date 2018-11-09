@@ -6,11 +6,16 @@ import query from '../queries/fetchSongs'
 
 class SongList extends Component {
 
+  onSongDelete(id) {
+    this.props.mutate({ variables: { id } })
+  }
+
   renderSongs() {
     return this.props.data.songs.map(song => {
       return(
         <li key={song.id} className="collection-item">
           {song.title}
+          <i className="material-icons right" onClick={() => this.onSongDelete(song.id)}>delete</i>
         </li>
       )
     })
@@ -33,5 +38,15 @@ class SongList extends Component {
     );
   }
 }
+
+const mutation = gql`
+  mutation DeleteSong($id: ID) {
+    deleteSong(id: $id) {
+      id
+    }
+  }
+`
  
-export default graphql(query)(SongList);
+export default graphql(mutation)(
+  graphql(query)(SongList)
+)

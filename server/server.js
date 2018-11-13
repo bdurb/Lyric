@@ -7,7 +7,7 @@ const schema = require('./schema/schema');
 
 const app = express();
 
-
+// to run locally, create a mlab account and place mongo uri here. 
 const MONGO_URI = '';
 if (!MONGO_URI) {
   throw new Error('You must provide a MongoLab URI');
